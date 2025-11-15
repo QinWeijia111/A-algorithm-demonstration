@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>二维循迹搜索可视化</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="toolbar">
+      <div class="controls card">
+        <label>尺寸</label>
+        <input id="size" type="number" value="30" min="5" max="200" />
+        <label>算法</label>
+        <select id="algorithm">
+          <option value="astar">A*</option>
+          <option value="dijkstra">Dijkstra</option>
+          <option value="greedy">贪心</option>
+        </select>
+        <label>启发</label>
+        <select id="heuristic">
+          <option value="octile">Octile</option>
+          <option value="manhattan">Manhattan</option>
+          <option value="euclidean">Euclidean</option>
+          <option value="chebyshev">Chebyshev</option>
+          <option value="zero">Zero</option>
+        </select>
+        <label>权重</label>
+        <input id="weight" type="number" step="0.1" value="1" />
+        <label><input id="diag" type="checkbox" checked />允许斜走</label>
+        <label>速度(ms)</label>
+        <input id="speed" type="range" min="10" max="300" value="50" />
+        <button id="startBtn">开始</button>
+        <button id="stepBtn">单步</button>
+        <button id="autoBtn">连续</button>
+        <button id="pauseBtn">暂停</button>
+        <button id="resetBtn">重置</button>
+        <button id="clearObsBtn">清除障碍</button>
+        <button id="saveBtn">保存截图</button>
+      </div>
+      <div class="stats card">
+        <span>展开数: <span id="expanded">0</span></span>
+        <span>耗时(ms): <span id="elapsed">0</span></span>
+      </div>
+    </div>
+    <div class="content column">
+      <div class="canvas-wrap card">
+        <canvas id="grid" width="800" height="600"></canvas>
+      </div>
+      <div class="tables-grid">
+        <div class="table card">
+          <h3>OPEN</h3>
+          <div id="open"></div>
+        </div>
+        <div class="table card">
+          <h3>CLOSED</h3>
+          <div id="closed"></div>
+        </div>
+        <div class="legend card">
+          <h3>图例</h3>
+          <div class="legend-row"><span class="legend-box legend-start"></span>起点</div>
+          <div class="legend-row"><span class="legend-box legend-goal"></span>终点</div>
+          <div class="legend-row"><span class="legend-box legend-obstacle"></span>障碍</div>
+          <div class="legend-row"><span class="legend-box legend-open"></span>OPEN</div>
+          <div class="legend-row"><span class="legend-box legend-closed"></span>CLOSED</div>
+          <div class="legend-row"><span class="legend-box legend-current"></span>当前扩展</div>
+          <div class="legend-row"><span class="legend-box legend-path"></span>最优路径</div>
+        </div>
+        <div class="history card">
+          <h3>历史记录</h3>
+          <div id="history"></div>
+          <div class="history-actions">
+            <button id="clearHistoryBtn">清空记录</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="/static/app.js"></script>
+  </body>
+</html>

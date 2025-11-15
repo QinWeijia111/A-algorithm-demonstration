@@ -1,0 +1,17 @@
+[project]
+name = "astar-web"
+version = "0.1.0"
+description = "Web visualization of grid search algorithms with step-by-step execution"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "fastapi>=0.115",
+  "uvicorn>=0.30",
+  "pydantic>=2.7",
+  "numpy>=2.0",
+  "pytest>=8.0",
+  "websockets>=13.0"
+]
+
+[tool.pytest.ini_options]
+addopts = "-q"
