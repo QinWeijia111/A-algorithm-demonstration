@@ -9,6 +9,7 @@ from .algorithms.grid import Grid
 from .algorithms.astar import AStar, Heuristic
 from .algorithms.dijkstra import Dijkstra
 from .algorithms.greedy import GreedyBestFirst
+from .algorithms.llm_astar import LLMAStar as LLMAStarAlgo
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="frontend"), name="static")
@@ -28,6 +29,8 @@ class StartPayload(BaseModel):
     algorithm: str = "astar"
     heuristic: str = "octile"
     weight: float = 1.0
+    llm_model: str = "deepseek"
+    llm_enabled: bool = False
 
 
 class Runner:
@@ -40,14 +43,22 @@ class Runner:
 
     def start(self, payload: StartPayload):
         self.grid = Grid(payload.size, set(map(tuple, payload.obstacles)), tuple(payload.start), tuple(payload.goal), payload.diagonal)
+        import os
+        llm_flag = payload.llm_enabled or os.getenv("LLM_GUIDE", "0") in ("1", "true", "True")
         if payload.algorithm == "astar":
             h = getattr(Heuristic, payload.heuristic, Heuristic.octile)
-            self.algo = AStar(self.grid, heuristic=h, weight=payload.weight)
+            if llm_flag:
+                self.algo = LLMAStarAlgo(self.grid, heuristic=h, weight=payload.weight)
+            else:
+                self.algo = AStar(self.grid, heuristic=h, weight=payload.weight)
         elif payload.algorithm == "dijkstra":
             self.algo = Dijkstra(self.grid)
         elif payload.algorithm == "greedy":
             h = getattr(Heuristic, payload.heuristic, Heuristic.octile)
             self.algo = GreedyBestFirst(self.grid, heuristic=h)
+        elif payload.algorithm == "llm_astar":
+            h = getattr(Heuristic, payload.heuristic, Heuristic.octile)
+            self.algo = LLMAStarAlgo(self.grid, heuristic=h, weight=payload.weight)
         else:
             self.algo = AStar(self.grid, heuristic=Heuristic.octile)
         self.finished = False
