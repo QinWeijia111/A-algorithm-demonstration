@@ -59,6 +59,7 @@
 
 ## 参考与致谢
 - 参考开源项目：`/a-star-algorithm`，复用 Octile 启发与 8邻域扩展思路（`a_star.py:23,29,124-137`）。
+- LLM-Astar算法参考论文：LLM-A*: Large Language Model Enhanced Incremental Heuristic Search on Path Planning
 
 ## 后续可扩展
 - 增加 BFS/IDA*、障碍批量生成与迷宫生成、路径平滑与可视化叠加对比、导入导出实验报告。
