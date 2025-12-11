@@ -1,0 +1,33 @@
+backend/algorithms/.env
+.env
+.DS_Store
+
+# Python cache
+__pycache__/
+backend/algorithms/__pycache__/
+backend/__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage*
+htmlcov/
+
+# Virtual env
+.venv/
+venv/
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+
+# Logs and temp
+*.log
+*.tmp
+*.swp
+
+# Editors
+.vscode/
+.idea/
+
+# Web
+node_modules/
